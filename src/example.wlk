@@ -3,7 +3,8 @@ class Estudiante{
 	var property materiasAprobadas = []
 	
 	method materiaCursando(nomDeMateria){
-		materiasCursando.add()
+		var cursando = new Materia()
+		materiasCursando.add(cursando)
 	}
 	method registrarAprobacion(nomDeMateria,nota){
 		var aprobado = new Aprobacion()
