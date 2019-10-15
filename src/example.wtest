@@ -1,0 +1,21 @@
+import materias.*
+
+// auto-generated at 15/10/2019 15:10:49
+
+describe "iniciar"{	
+	var juan = new Estudiante()
+	var programacion = new Carrera()
+	var obj1 = new Materia()
+	var obj2 = new Materia()
+	
+	test "prueba1"{
+		juan.materiaCursando(obj1)
+		juan.registrarAprobacion(obj1,7)
+		programacion.materiasDeCarrera(obj1)
+		programacion.materiasDeCarrera(obj2)
+		
+		assert.equals(7,juan.promedio())
+		 
+	}
+}	
+
