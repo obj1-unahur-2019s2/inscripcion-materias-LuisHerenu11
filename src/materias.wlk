@@ -36,7 +36,7 @@ class Estudiante{
 	method puedeInscribirse(materia){
 		return carreras.any({ carr => carr.materias().contains(materia)}) 
 			and not self.estaAprobado(materia) and not materiasCursando.any(materia) 
-			and materia.materiasRequisitos().forEach({ mat => mat.estaAprobado()})
+			and materia.materiasRequisitos().all({ mat => mat.estaAprobado()})
 	}
 }
 
