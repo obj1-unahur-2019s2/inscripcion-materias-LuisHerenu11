@@ -53,7 +53,7 @@ class Estudiante{
 	}
 	
 	method tieneTodosLosRequisitos(materia){
-		return materia.materiaRequisitos().all({req => self.estaAprobado(materia)})
+		return materia.materiaRequisitos().all({req => self.estaAprobado(req)})
 	}
 
 	method materiaCorrespondeALaCarrera(materia){
