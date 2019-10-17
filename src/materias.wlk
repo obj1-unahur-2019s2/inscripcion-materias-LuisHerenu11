@@ -34,9 +34,30 @@ class Estudiante{
 		return aprobaciones.sum({aprob => aprob.nota() / self.cantidadDeMateriasAprobadas()})
 	}
 	method puedeInscribirse(materia){
-		return carreras.any({ carr => carr.materias().contains(materia)}) 
-			and not self.estaAprobado(materia) and not materiasCursando.any(materia) 
-			and materia.materiasRequisitos().all({ mat => mat.estaAprobado()})
+		return self.materiaCorrespondeALaCarrera(materia) 
+		and not self.estaAprobado(materia) 
+		and not self.materiasCursando().any(materia) 
+		and self.tieneTodosLosRequisitos(materia)
+	}
+	
+	method Inscribir(materia){
+		if(not self.puedeInscribirse(materia)){
+			self.error("no puedo cursar")
+		}
+		// Aca llega "solamente" si yo puedo cursar.
+		materia.anotar(self)
+	}
+	
+	method estaInscripto(materia){
+		return materia.inscriptos().contains(self)
+	}
+	
+	method tieneTodosLosRequisitos(materia){
+		return materia.materiaRequisitos().all({req => self.estaAprobado(materia)})
+	}
+
+	method materiaCorrespondeALaCarrera(materia){
+		return carreras.any({ carr => carr.materias().contains(materia)})
 	}
 }
 
@@ -53,9 +74,19 @@ class Carrera {
 class Materia{
 	var property materia
 	var property materiaRequisitos = []
+	var property inscriptos = []
+	var property listaDeEspera = []
+	const property cupo
 	
 	method requisitoDeMateria(materiaRequisito){
 		materiaRequisitos.add(materiaRequisito)
+	}
+	method anotar(unEstudiante){
+		if (inscriptos.size() < cupo){
+			self.inscriptos().add(unEstudiante)
+		}else{
+			self.listaDeEspera().add(unEstudiante)
+		}
 	}
 }
 
